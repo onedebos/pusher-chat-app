@@ -8,11 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@pusher/push-notifications-web": "^1.1.0",
+    "autoprefixer": "^10.0.4",
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "next": "latest",
+    "postcss": "^8.1.10",
+    "pusher": "^5.0.0",
+    "pusher-js": "^7.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "autoprefixer": "^10.0.4",
-    "postcss": "^8.1.10",
     "tailwindcss": "^2.0.2"
   }
 }

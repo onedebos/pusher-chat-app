@@ -3,7 +3,7 @@ import Pusher from "pusher-js";
 import SendMessage from "../components/SendMessage";
 import axios from "axios";
 import ChatList from "../components/ChatList";
-import LeftPanel from '../components/LeftPanel'
+import LeftPanel from "../components/LeftPanel";
 
 const Chat = ({ sender }) => {
   const [chats, setChats] = useState([]);
@@ -30,12 +30,11 @@ const Chat = ({ sender }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessageToSend("");
     await axios.post("/api/pusher", { message: messageToSend, sender });
   };
 
   return (
-    <div className="m-auto max-w-full h-screen bg-purple-500">
+    <div className="m-auto max-w-full h-screen bg-purple-500 shadow-lg">
       <div className="max-w-4xl m-auto pt-20">
         <div className="grid grid-cols-3 bg-white px-10 py-10 rounded-lg">
           <div className="col-span-1 mr-5 ">

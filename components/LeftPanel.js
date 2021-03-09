@@ -13,7 +13,7 @@ const LeftPanel = ({sender}) => (
         Hello, <span className="font-semibold">{sender}</span>
         <div className="mt-4">
           <Link href="/">
-            <a className="text-white bg-purple-500 px-2 py-3 rounded-md w-full">
+            <a className="text-white bg-purple-500 px-5 text-xs py-3 rounded-md w-full">
               Sign out
             </a>
           </Link>
@@ -22,7 +22,7 @@ const LeftPanel = ({sender}) => (
     </div>
 
     <div className="mt-10">
-      <h2 className="font-semibold text-xl text-green-500">You're online.</h2>
+      <h2 className="text-green-600">You're online.</h2>
     </div>
   </>
 );

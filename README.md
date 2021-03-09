@@ -6,3 +6,5 @@ This example shows demonstrates how to build a Realtime chat application with Pu
 
 - Clone this repo and `cd pusher-chat`
 - run `yarn install && yarn dev` then navigate to `localhost:3000` to see the application
+
+

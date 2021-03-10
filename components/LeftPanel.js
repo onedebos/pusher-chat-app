@@ -1,6 +1,6 @@
-import Link from 'next/link'
+import Link from "next/link";
 
-const LeftPanel = ({sender}) => (
+const LeftPanel = ({ sender, onSignOut }) => (
   <>
     <div className="bg-purple-100 shadow-md h-64 flex flex-col justify-center items-center rounded-md">
       <div className="h-24 w-24 mb-3">
@@ -11,14 +11,12 @@ const LeftPanel = ({sender}) => (
       </div>
       <p className="text-purple-500">
         Hello, <span className="font-semibold">{sender}</span>
-        <div className="mt-4">
-          <Link href="/">
-            <a className="text-white bg-purple-500 px-5 text-xs py-3 rounded-md w-full">
-              Sign out
-            </a>
-          </Link>
-        </div>
       </p>
+      <div className="mt-4">
+        <button onClick={onSignOut} className="text-white bg-purple-500 px-5 text-xs py-3 rounded-md w-full">
+          Sign out
+        </button>
+      </div>
     </div>
 
     <div className="mt-10">

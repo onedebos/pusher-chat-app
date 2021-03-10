@@ -10,7 +10,7 @@ export const pusher = new Pusher({
 
 export default async function handler(req, res) {
   const { message, sender } = req.body;
-  const response = await pusher.trigger("chat", "chat-event", {
+  await pusher.trigger("chat", "chat-event", {
     message,
     sender,
   });

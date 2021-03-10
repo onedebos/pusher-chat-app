@@ -4,19 +4,50 @@ import SendMessage from "../components/SendMessage";
 import axios from "axios";
 import ChatList from "../components/ChatList";
 import LeftPanel from "../components/LeftPanel";
+import Notifications from '../components/Notifications'
+import {useRouter} from 'next/router'
 
-const Chat = ({ sender }) => {
+const Chat = ({ username }) => {
+  const router = useRouter()
+  const pusher = new Pusher(process.env.NEXT_PUBLIC_KEY, {
+    cluster: "eu",
+    // use jwts in prod
+    authEndpoint: `api/pusher/auth/${username}`,
+  });
+
   const [chats, setChats] = useState([]);
   const [messageToSend, setMessageToSend] = useState("");
-
+  const [onlineUsersCount, setOnlineUsersCount] = useState(0)
+  const [onlineUsers, setOnlineUsers] = useState([])
+  const [usersRemoved, setUsersRemoved] = useState([])
+  
   useEffect(() => {
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_KEY, {
-      cluster: "eu",
-    });
 
-    const channel = pusher.subscribe("chat");
 
-    channel.bind("chat-event", function (data) {
+    const channel = pusher.subscribe("presence-channel");
+    
+    // when a new member successfully subscribes to the channel
+    channel.bind('pusher:subscription_succeeded', (members)=>{
+      // total subscribed
+      setOnlineUsersCount(members.count)
+    })
+
+    // when a new member joins the chat
+    channel.bind('pusher:member_added', (member)=>{
+      setOnlineUsersCount(channel.members.count)
+      setOnlineUsers((prevState)=>[...prevState, {username: member.info.username}])
+    })
+
+    // when a member leaves the chat
+    channel.bind('pusher:member_removed', (member) =>{
+      setOnlineUsersCount(channel.members.count)
+      console.log(member.info.username)
+      setUsersRemoved((prevState)=>[...prevState, member.info.username])
+    })
+
+
+    // updates chats  
+    channel.bind("chat-update", function (data) {
       setChats((prevState) => [
         ...prevState,
         { sender: data.sender, message: data.message },
@@ -24,13 +55,18 @@ const Chat = ({ sender }) => {
     });
 
     return () => {
-      pusher.unsubscribe("chat");
+      pusher.unsubscribe("presence-channel");
     };
   }, []);
 
+  const handleSignOut = () =>{
+    pusher.unsubscribe("presence-channel");
+    router.push('/')
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("/api/pusher", { message: messageToSend, sender });
+    await axios.post("/api/pusher/chat-update", { message: messageToSend, sender:username });
   };
 
   return (
@@ -38,13 +74,14 @@ const Chat = ({ sender }) => {
       <div className="max-w-4xl m-auto pt-20">
         <div className="grid grid-cols-3 bg-white px-10 py-10 rounded-lg">
           <div className="col-span-1 mr-5 ">
-            <LeftPanel sender={sender} />
+            <LeftPanel sender={username} onSignOut={handleSignOut} />
+            <Notifications onlineUsersCount={onlineUsersCount} onlineUsers={onlineUsers} usersRemoved={usersRemoved} />
           </div>
 
           <div className="col-span-2 flex flex-col bg-purple-50 rounded-lg px-5 py-5">
             <div className="flex-1">
               {chats.map((chat, id) => (
-                <ChatList key={id} chat={chat} currentUser={sender} />
+                <ChatList key={id} chat={chat} currentUser={username} />
               ))}
             </div>
 

@@ -1,6 +1,7 @@
 const ChatList = ({ chat, currentUser }) => {
+
   const flexClasses =
-    chat.sender !== currentUser && "flex flex-col justify-end items-end";
+    chat.sender !== currentUser ? "flex flex-col justify-end items-end" : "";
 
   const chatBgClasses =
     chat.sender === currentUser
@@ -16,7 +17,7 @@ const ChatList = ({ chat, currentUser }) => {
       </div>
       <div
         className={`${
-          chat.sender !== currentUser && "w-full text-right"
+          chat.sender !== currentUser ? "w-full text-right" : ""
         } text-purple-900`}
       >
         <small>{chat.sender}</small>

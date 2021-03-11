@@ -7,12 +7,13 @@ import LeftPanel from "../components/LeftPanel";
 import Notifications from "../components/Notifications";
 import { useRouter } from "next/router";
 
-const Chat = ({ username }) => {
+const Chat = ({ username, userLocation }) => {
   const router = useRouter();
   const pusher = new Pusher(process.env.NEXT_PUBLIC_KEY, {
     cluster: "eu",
     // use jwts in prod
-    authEndpoint: `api/pusher/auth/${username}`,
+    authEndpoint: `api/pusher/auth`,
+    auth: { params: {username, userLocation}}
   });
 
   const [chats, setChats] = useState([]);
@@ -22,7 +23,8 @@ const Chat = ({ username }) => {
   const [usersRemoved, setUsersRemoved] = useState([]);
 
   useEffect(() => {
-    const channel = pusher.subscribe("presence-channel");
+    const channel = pusher.subscribe("presence-channel"); 
+    const {count} = channel.members
 
     // when a new member successfully subscribes to the channel
     channel.bind("pusher:subscription_succeeded", (members) => {
@@ -32,25 +34,25 @@ const Chat = ({ username }) => {
 
     // when a new member joins the chat
     channel.bind("pusher:member_added", (member) => {
-      setOnlineUsersCount(channel.members.count);
+      setOnlineUsersCount(count);
       setOnlineUsers((prevState) => [
         ...prevState,
-        { username: member.info.username },
+        { username: member.info.username, userLocation: member.info.userLocation },
       ]);
     });
 
     // when a member leaves the chat
     channel.bind("pusher:member_removed", (member) => {
-      setOnlineUsersCount(channel.members.count);
-      console.log(member.info.username);
+      setOnlineUsersCount(count);
       setUsersRemoved((prevState) => [...prevState, member.info.username]);
     });
 
     // updates chats
     channel.bind("chat-update", function (data) {
+      const {username, message} = data
       setChats((prevState) => [
         ...prevState,
-        { sender: data.sender, message: data.message },
+        { username, message },
       ]);
     });
 
@@ -68,7 +70,7 @@ const Chat = ({ username }) => {
     e.preventDefault();
     await axios.post("/api/pusher/chat-update", {
       message: messageToSend,
-      sender: username,
+      username
     });
   };
 

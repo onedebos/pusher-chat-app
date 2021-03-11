@@ -1,11 +1,13 @@
 import { pusher } from "./index";
 
+// presence channel handler
 export default async function handler(req, res) {
-  const { message, sender } = req.body;
+  const { message, username, userLocation } = req.body;
   // trigger a new post event via pusher
   await pusher.trigger("presence-channel", "chat-update", {
     message,
-    sender,
+    username,
+    userLocation
   });
 
   res.json({ status: 200 });

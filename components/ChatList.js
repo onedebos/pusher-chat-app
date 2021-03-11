@@ -1,9 +1,9 @@
 const ChatList = ({ chat, currentUser }) => {
   const flexClasses =
-    chat.sender !== currentUser ? "flex flex-col justify-end items-end" : "";
+    chat.username !== currentUser ? "flex flex-col justify-end items-end" : "";
 
   const chatBgClasses =
-    chat.sender === currentUser
+    chat.username === currentUser
       ? "bg-gray-900 text-white "
       : "bg-purple-200 w-full text-gray-700";
 
@@ -16,10 +16,10 @@ const ChatList = ({ chat, currentUser }) => {
       </div>
       <div
         className={`${
-          chat.sender !== currentUser ? "w-full text-right" : ""
+          chat.username !== currentUser ? "w-full text-right" : ""
         } text-purple-900`}
       >
-        <small>{chat.sender}</small>
+        <small>{chat.username}</small>
       </div>
     </div>
   );

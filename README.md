@@ -17,3 +17,6 @@ You'll also need to get a google API key to use the realtime location feature.
 - run `yarn install && yarn dev` then navigate to `localhost:3000` in your browser to see the application
 
 
+## Live
+The Live version of this app is available [here](https://pusher-chat-app.vercel.app/)
+

@@ -1,6 +1,6 @@
 # Next.js + Pusher Channels
 
-This example shows how to build a Realtime chat application with Pusher and Next.JS serverless functions. The 
+This example shows how to build a Realtime chat application with Pusher and Next.JS serverless functions. 
 
 ## To run this example
 

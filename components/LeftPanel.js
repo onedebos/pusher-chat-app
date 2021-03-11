@@ -13,7 +13,10 @@ const LeftPanel = ({ sender, onSignOut }) => (
         Hello, <span className="font-semibold">{sender}</span>
       </p>
       <div className="mt-4">
-        <button onClick={onSignOut} className="text-white bg-purple-500 px-5 text-xs py-3 rounded-md w-full">
+        <button
+          onClick={onSignOut}
+          className="text-white bg-purple-500 px-5 text-xs py-3 rounded-md w-full"
+        >
           Sign out
         </button>
       </div>

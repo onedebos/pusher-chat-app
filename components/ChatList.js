@@ -1,5 +1,4 @@
 const ChatList = ({ chat, currentUser }) => {
-
   const flexClasses =
     chat.sender !== currentUser ? "flex flex-col justify-end items-end" : "";
 

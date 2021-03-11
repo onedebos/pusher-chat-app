@@ -3,9 +3,11 @@ const Notifications = ({ onlineUsers, onlineUsersCount, usersRemoved }) => {
     <>
       <div>{onlineUsersCount} user(s) online now</div>
 
-      <h2 className="text-purple-500 shadow-sm mt-3 bg-purple-50 py-2 px-2 rounded-sm font-medium">Notifications</h2>
+      <h2 className="text-purple-500 shadow-sm mt-3 bg-purple-50 py-2 px-2 rounded-sm font-medium">
+        Notifications
+      </h2>
       <div className="bg-purple-50 rounded-sm pb-2 px-2">
-        {/* <pre>{JSON.stringify(onlineUsers, undefined, 2)}</pre> */}
+        {/* show online users */}
         {onlineUsers.map((user, id) => (
           <p key={id}>
             {" "}
@@ -14,6 +16,7 @@ const Notifications = ({ onlineUsers, onlineUsersCount, usersRemoved }) => {
           </p>
         ))}
 
+        {/* show users leaving the chat */}
         {usersRemoved.map((user, id) => (
           <p key={id}>
             {" "}

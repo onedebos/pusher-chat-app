@@ -1,4 +1,4 @@
-import { pusher } from "./index";
+import { pusher } from "../../../lib/pusher";
 
 // presence channel handler
 export default async function handler(req, res) {

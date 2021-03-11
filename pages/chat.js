@@ -24,7 +24,6 @@ const Chat = ({ username, userLocation }) => {
 
   useEffect(() => {
     const channel = pusher.subscribe("presence-channel"); 
-    const {count} = channel.members
 
     // when a new member successfully subscribes to the channel
     channel.bind("pusher:subscription_succeeded", (members) => {
@@ -34,7 +33,8 @@ const Chat = ({ username, userLocation }) => {
 
     // when a new member joins the chat
     channel.bind("pusher:member_added", (member) => {
-      setOnlineUsersCount(count);
+      // console.log("count",channel.members.count)
+      setOnlineUsersCount(channel.members.count);
       setOnlineUsers((prevState) => [
         ...prevState,
         { username: member.info.username, userLocation: member.info.userLocation },
@@ -43,7 +43,7 @@ const Chat = ({ username, userLocation }) => {
 
     // when a member leaves the chat
     channel.bind("pusher:member_removed", (member) => {
-      setOnlineUsersCount(count);
+      setOnlineUsersCount(channel.members.count);
       setUsersRemoved((prevState) => [...prevState, member.info.username]);
     });
 

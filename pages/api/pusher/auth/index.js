@@ -1,8 +1,7 @@
-import {pusher} from '../index'
+import {pusher} from '../../../../lib/pusher'
 
 export default async function handler( req, res ) {
   // see https://pusher.com/docs/channels/server_api/authenticating-users
-  console.log(req.body)
   const { socket_id, channel_name, username, userLocation } = req.body;
 
   // use JWTs here to authenticate users before continuing

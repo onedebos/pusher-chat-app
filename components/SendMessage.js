@@ -11,7 +11,7 @@ const SendMessage = ({ handleSubmit, handleMessageChange, message }) => {
       />
       <button
         type="submit"
-        className="bg-purple-500 px-2 rounded-r-md text-white max-w-sm mt-3 h-full"
+        className="bg-purple-500 px-2 rounded-r-md text-white max-w-sm h-full"
       >
         Send
       </button>

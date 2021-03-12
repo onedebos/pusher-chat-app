@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }) {
   const [username, setUsername] = useState("");
@@ -42,6 +43,11 @@ function MyApp({ Component, pageProps }) {
 
 
   return (
+    <>
+      <Head>
+        <title>Pusher - Presence Channels API Demo</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
     <Component
       handleLoginChange={(e) => setUsername(e.target.value)}
       username={username}
@@ -49,6 +55,7 @@ function MyApp({ Component, pageProps }) {
       handleLogin={handleLogin}
       {...pageProps}
     />
+    </>
   );
 }
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
-  const [username, setUsername] = useState("");
+  const [sender, setSender] = useState("");
   const router = useRouter();
 
   const handleLogin = (e) => {
@@ -13,8 +13,8 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Component
-      handleLoginChange={(e) => setUsername(e.target.value)}
-      username={username}
+      handleLoginChange={(e) => setSender(e.target.value)}
+      sender={sender}
       handleLogin={handleLogin}
       {...pageProps}
     />
